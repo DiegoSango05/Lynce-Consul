@@ -207,7 +207,7 @@ const tm=$('#team');
 T.forEach((m,i)=>{const b=document.createElement('button');b.className='card member';b.setAttribute('aria-pressed','false');
 b.innerHTML=`<div class="av" style="background:${m.c}">${m.n.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><h3>${m.n}</h3><p>${m.r}</p>`;
 b.onclick=()=>{[...tm.children].forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
-$('#cv').innerHTML=`<div><h3>${m.n} · ${m.r}</h3><p class="mut" style="margin-top:8px">${m.f}</p><div style="margin-top:12px">${m.s.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div><div><h4>Experiencia y funciones</h4><ul>${m.e.map(x=>`<li>${x}</li>`).join('')}</ul><p style="margin-top:12px"><a href="#" onclick="return false">Ver CV completo</a> <span class="todo">(enlazar CV)</span></p></div>`};
+$('#cv').innerHTML=`<div><h3>${m.n} · ${m.r}</h3><p class="mut" style="margin-top:8px">${m.f}</p><div style="margin-top:12px">${m.s.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div><div><h4>Experiencia y funciones</h4><ul>${m.e.map(x=>`<li>${x}</li>`).join('')}</ul><p style="margin-top:12px"><a href="#" onclick="return false">Ver CV completo</a></p></div>`};
 tm.append(b)});tm.children[0].click();
 /* PROCESO */
 const P=[
