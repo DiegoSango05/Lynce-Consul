@@ -6,7 +6,7 @@ $('#hl').onchange=e=>$('#org').classList.toggle('hl',e.target.checked);
 /* EQUIPO: sustituye estos datos por los de los integrantes reales */
 const T=[
 {n:"Rubén Martínez Cabedo",r:"Director de proyecto",c:"#1B4060",f:"Grado en Ingeniería Informática, UJI",e:["Coordinación del proyecto y relación con el cliente","Planificación y control de entregables"],s:["Gestión de proyectos","Comunicación","Planificación"],cv:"cv/CV_RubenMC.pdf"},
-{n:"Diego Sánchez Gómez",r:"Analista de procesos",c:"#3776A8",f:"Grado en Ingeniería Informática, UJI",e:["Modelado de procesos de negocio (BPMN)","Detección de problemas y mejoras"],s:["BPMN","Análisis","Entrevistas"],cv:"cv/cv-diego.pdf"},
+{n:"Diego Sánchez Gómez",r:"Analista de procesos",c:"#3776A8",f:"Grado en Ingeniería Informática, UJI",e:["Modelado de procesos de negocio (BPMN)","Detección de problemas y mejoras"],s:["BPMN","Análisis","Entrevistas"],cv:"cv/CV_DiegoSánchez.pdf"},
 {n:"Sandra Giménez Albiñana",r:"Consultora funcional ERP",c:"#3AB3B1",f:"Grado en Matemática Computacional, UJI",e:["Definición de requisitos funcionales","Comparativa y selección de ERP"],s:["Odoo","SAP","Requisitos"],cv:"cv/CV_SandraGimenez.pdf"},
 {n:"Javier García Bermejo",r:"Responsable de datos y calidad",c:"#4F8FBF",f:"Grado en Matemática Computacional, UJI",e:["Migración y calidad de datos","Trazabilidad y KPIs"],s:["Datos","SQL","KPIs"],cv:"cv/CV_JavierGarcía.pdf"}];
 const tm=$('#team');
