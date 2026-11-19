@@ -5,15 +5,15 @@ document.querySelectorAll('#menu a').forEach(a=>a.onclick=()=>$('#menu').classLi
 $('#hl').onchange=e=>$('#org').classList.toggle('hl',e.target.checked);
 /* EQUIPO: sustituye estos datos por los de los integrantes reales */
 const T=[
-{n:"Rubén Martínez Cabedo",r:"Director de proyecto",c:"#1B4060",f:"Grado en Ingeniería Informática, UJI",e:["Coordinación del proyecto y relación con el cliente","Planificación y control de entregables"],s:["Gestión de proyectos","Comunicación","Planificación"]},
-{n:"Diego Sánchez Gómez",r:"Analista de procesos",c:"#3776A8",f:"Grado en Ingeniería Informática, UJI",e:["Modelado de procesos de negocio (BPMN)","Detección de problemas y mejoras"],s:["BPMN","Análisis","Entrevistas"]},
-{n:"Sandra Giménez Albiñana",r:"Consultora funcional ERP",c:"#3AB3B1",f:"Grado en Matemática Computacional, UJI",e:["Definición de requisitos funcionales","Comparativa y selección de ERP"],s:["Odoo","SAP","Requisitos"]},
-{n:"Javier García Bermejo",r:"Responsable de datos y calidad",c:"#4F8FBF",f:"Grado en Matemática Computacional, UJI",e:["Migración y calidad de datos","Trazabilidad y KPIs"],s:["Datos","SQL","KPIs"]}];
+{n:"Rubén Martínez Cabedo",r:"Director de proyecto",c:"#1B4060",f:"Grado en Ingeniería Informática, UJI",e:["Coordinación del proyecto y relación con el cliente","Planificación y control de entregables"],s:["Gestión de proyectos","Comunicación","Planificación"],cv:"cv/CV_RubenMC.pdf"},
+{n:"Diego Sánchez Gómez",r:"Analista de procesos",c:"#3776A8",f:"Grado en Ingeniería Informática, UJI",e:["Modelado de procesos de negocio (BPMN)","Detección de problemas y mejoras"],s:["BPMN","Análisis","Entrevistas"],cv:"cv/cv-diego.pdf"},
+{n:"Sandra Giménez Albiñana",r:"Consultora funcional ERP",c:"#3AB3B1",f:"Grado en Matemática Computacional, UJI",e:["Definición de requisitos funcionales","Comparativa y selección de ERP"],s:["Odoo","SAP","Requisitos"],cv:"cv/CV_SandraGimenez.pdf"},
+{n:"Javier García Bermejo",r:"Responsable de datos y calidad",c:"#4F8FBF",f:"Grado en Matemática Computacional, UJI",e:["Migración y calidad de datos","Trazabilidad y KPIs"],s:["Datos","SQL","KPIs"],cv:"cv/CV_JavierGarcía.pdf"}];
 const tm=$('#team');
 T.forEach((m,i)=>{const b=document.createElement('button');b.className='card member';b.setAttribute('aria-pressed','false');
 b.innerHTML=`<div class="av" style="background:${m.c}">${m.n.split(' ').map(x=>x[0]).join('').slice(0,2)}</div><h3>${m.n}</h3><p>${m.r}</p>`;
 b.onclick=()=>{[...tm.children].forEach(c=>c.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
-$('#cv').innerHTML=`<div><h3>${m.n} · ${m.r}</h3><p class="mut mt-8">${m.f}</p><div class="mt-12">${m.s.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div><div><h4>Experiencia y funciones</h4><ul>${m.e.map(x=>`<li>${x}</li>`).join('')}</ul><p class="mt-12"><a href="#" onclick="return false">Ver CV completo</a> <span class="todo">(enlazar CV)</span></p></div>`};
+$('#cv').innerHTML=`<div><h3>${m.n} · ${m.r}</h3><p class="mut mt-8">${m.f}</p><div class="mt-12">${m.s.map(x=>`<span class="pill">${x}</span>`).join('')}</div></div><div><h4>Experiencia y funciones</h4><ul>${m.e.map(x=>`<li>${x}</li>`).join('')}</ul><p class="mt-12"><a href="${m.cv}" target="_blank" rel="noopener noreferrer">Ver CV completo</a></p></div>`};
 tm.append(b)});tm.children[0].click();
 /* PROCESO */
 const P=[
