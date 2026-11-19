@@ -2,12 +2,12 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:co
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 1.45rem "Bricolage Grotesque",sans-serif;color:var(--fg)}
 .logo img{width:36px;height:36px}
-nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;align-items:center}
-nav a{text-decoration:none;font-weight:500;color:var(--mut);font-size:.97rem}
+nav ul{display:flex;gap:16px;list-style:none;margin:0;padding:0;align-items:center}
+nav a{text-decoration:none;font-weight:500;color:var(--mut);font-size:.93rem}
 nav a:hover{color:var(--fg)}
 .ic{background:none;border:1px solid var(--line);color:var(--fg);border-radius:8px;width:38px;height:38px;cursor:pointer;font-size:16px}
 #burger{display:none}
-@media(max-width:940px){#burger{display:block}
+@media(max-width:1180px){#burger{display:block}
 nav ul{display:none;position:absolute;left:0;right:0;top:68px;background:var(--bg);flex-direction:column;padding:20px;border-bottom:1px solid var(--line)}
 nav ul.open{display:flex}}
 .hero{padding:64px 0 70px}

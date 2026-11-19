@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Defs_Process_AsIs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.0.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <bpmn:collaboration id="Collab_Process_AsIs">
+    <bpmn:participant id="Pool_Process_AsIs" name="Servyeco · Order-to-cash (AS-IS)" processRef="Process_AsIs" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_AsIs" name="Servyeco · Order-to-cash (AS-IS)" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Process_AsIs">
+      <bpmn:lane id="Lane_1" name="Cliente"><bpmn:flowNodeRef>Start_Necesidad</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Solicita</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="Lane_2" name="Administración"><bpmn:flowNodeRef>T_Anota</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Registra</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Avisa</bpmn:flowNodeRef><bpmn:flowNodeRef>End_Replan</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="Lane_3" name="Almacén"><bpmn:flowNodeRef>T_Stock</bpmn:flowNodeRef><bpmn:flowNodeRef>GW_Stock</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Expide</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="Lane_4" name="Laboratorio"><bpmn:flowNodeRef>T_Verifica</bpmn:flowNodeRef></bpmn:lane>
+      <bpmn:lane id="Lane_5" name="Contabilidad"><bpmn:flowNodeRef>T_Factura</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Seguimiento</bpmn:flowNodeRef><bpmn:flowNodeRef>T_Concilia</bpmn:flowNodeRef><bpmn:flowNodeRef>End_Cobrado</bpmn:flowNodeRef></bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Necesidad" name="Necesidad de producto"><bpmn:outgoing>Flow_1</bpmn:outgoing></bpmn:startEvent>
+    <bpmn:manualTask id="T_Solicita" name="Solicita producto (correo, tel., WhatsApp)"><bpmn:documentation>P1: pedidos por varios canales sin formato único.</bpmn:documentation><bpmn:incoming>Flow_1</bpmn:incoming><bpmn:outgoing>Flow_2</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:manualTask id="T_Anota" name="Recibe y anota el pedido"><bpmn:documentation>P1: anotación manual; pedidos perdidos o duplicados.</bpmn:documentation><bpmn:incoming>Flow_2</bpmn:incoming><bpmn:outgoing>Flow_3</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:manualTask id="T_Registra" name="Registra en Excel o papel"><bpmn:documentation>P2: doble registro y errores de transcripción.</bpmn:documentation><bpmn:incoming>Flow_3</bpmn:incoming><bpmn:outgoing>Flow_4</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:userTask id="T_Stock" name="Consulta stock y lotes (Excel)"><bpmn:documentation>P3: Excel desactualizado.</bpmn:documentation><bpmn:incoming>Flow_4</bpmn:incoming><bpmn:outgoing>Flow_5</bpmn:outgoing></bpmn:userTask>
+    <bpmn:exclusiveGateway id="GW_Stock" name="¿Hay stock?"><bpmn:documentation>P3: decisión con datos poco fiables.</bpmn:documentation><bpmn:incoming>Flow_5</bpmn:incoming><bpmn:outgoing>Flow_6</bpmn:outgoing><bpmn:outgoing>Flow_8</bpmn:outgoing></bpmn:exclusiveGateway>
+    <bpmn:manualTask id="T_Avisa" name="Avisa al cliente y replanifica"><bpmn:incoming>Flow_6</bpmn:incoming><bpmn:outgoing>Flow_7</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:endEvent id="End_Replan" name="Pedido replanificado"><bpmn:incoming>Flow_7</bpmn:incoming></bpmn:endEvent>
+    <bpmn:userTask id="T_Verifica" name="Verifica lote y calidad"><bpmn:documentation>P4: cuello de botella y trazabilidad lenta.</bpmn:documentation><bpmn:incoming>Flow_8</bpmn:incoming><bpmn:outgoing>Flow_9</bpmn:outgoing></bpmn:userTask>
+    <bpmn:manualTask id="T_Expide" name="Prepara y expide con albarán"><bpmn:documentation>P5: albarán y aviso de expedición manuales.</bpmn:documentation><bpmn:incoming>Flow_9</bpmn:incoming><bpmn:outgoing>Flow_10</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:userTask id="T_Factura" name="Emite la factura"><bpmn:documentation>P6: datos recogidos a mano.</bpmn:documentation><bpmn:incoming>Flow_10</bpmn:incoming><bpmn:outgoing>Flow_11</bpmn:outgoing></bpmn:userTask>
+    <bpmn:manualTask id="T_Seguimiento" name="Sigue el cobro (manual)"><bpmn:documentation>P7: sin avisos de vencimiento.</bpmn:documentation><bpmn:incoming>Flow_11</bpmn:incoming><bpmn:outgoing>Flow_12</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:manualTask id="T_Concilia" name="Cobra y concilia el pago"><bpmn:documentation>P7: sin conciliación automática.</bpmn:documentation><bpmn:incoming>Flow_12</bpmn:incoming><bpmn:outgoing>Flow_13</bpmn:outgoing></bpmn:manualTask>
+    <bpmn:endEvent id="End_Cobrado" name="Pago conciliado"><bpmn:incoming>Flow_13</bpmn:incoming></bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Necesidad" targetRef="T_Solicita" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T_Solicita" targetRef="T_Anota" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="T_Anota" targetRef="T_Registra" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="T_Registra" targetRef="T_Stock" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="T_Stock" targetRef="GW_Stock" />
+    <bpmn:sequenceFlow id="Flow_6" name="No" sourceRef="GW_Stock" targetRef="T_Avisa" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="T_Avisa" targetRef="End_Replan" />
+    <bpmn:sequenceFlow id="Flow_8" name="Sí" sourceRef="GW_Stock" targetRef="T_Verifica" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="T_Verifica" targetRef="T_Expide" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="T_Expide" targetRef="T_Factura" />
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="T_Factura" targetRef="T_Seguimiento" />
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="T_Seguimiento" targetRef="T_Concilia" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="T_Concilia" targetRef="End_Cobrado" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_AsIs">
+    <bpmndi:BPMNPlane id="Plane_Process_AsIs" bpmnElement="Collab_Process_AsIs">
+      <bpmndi:BPMNShape id="Pool_Process_AsIs_di" bpmnElement="Pool_Process_AsIs" isHorizontal="true"><dc:Bounds x="150" y="80" width="1640" height="600" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="180" y="80" width="1610" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true"><dc:Bounds x="180" y="200" width="1610" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true"><dc:Bounds x="180" y="320" width="1610" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_4_di" bpmnElement="Lane_4" isHorizontal="true"><dc:Bounds x="180" y="440" width="1610" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_5_di" bpmnElement="Lane_5" isHorizontal="true"><dc:Bounds x="180" y="560" width="1610" height="120" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Necesidad_di" bpmnElement="Start_Necesidad"><dc:Bounds x="257" y="122" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="235" y="162" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Solicita_di" bpmnElement="T_Solicita"><dc:Bounds x="355" y="100" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Anota_di" bpmnElement="T_Anota"><dc:Bounds x="485" y="220" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Registra_di" bpmnElement="T_Registra"><dc:Bounds x="615" y="220" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Stock_di" bpmnElement="T_Stock"><dc:Bounds x="745" y="340" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="GW_Stock_di" bpmnElement="GW_Stock" isMarkerVisible="true" bioc:stroke="#B7700F" bioc:fill="#FCEBD0" color:background-color="#FCEBD0" color:border-color="#B7700F"><dc:Bounds x="900" y="355" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="814" y="401" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Avisa_di" bpmnElement="T_Avisa"><dc:Bounds x="875" y="220" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Replan_di" bpmnElement="End_Replan"><dc:Bounds x="1037" y="242" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="1015" y="282" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Verifica_di" bpmnElement="T_Verifica"><dc:Bounds x="1005" y="460" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Expide_di" bpmnElement="T_Expide"><dc:Bounds x="1135" y="340" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Factura_di" bpmnElement="T_Factura"><dc:Bounds x="1265" y="580" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Seguimiento_di" bpmnElement="T_Seguimiento"><dc:Bounds x="1395" y="580" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Concilia_di" bpmnElement="T_Concilia"><dc:Bounds x="1525" y="580" width="100" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Cobrado_di" bpmnElement="End_Cobrado"><dc:Bounds x="1687" y="602" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="1665" y="642" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="293" y="140" /><di:waypoint x="355" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="455" y="140" /><di:waypoint x="470" y="140" /><di:waypoint x="470" y="260" /><di:waypoint x="485" y="260" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="585" y="260" /><di:waypoint x="615" y="260" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="715" y="260" /><di:waypoint x="730" y="260" /><di:waypoint x="730" y="380" /><di:waypoint x="745" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="845" y="380" /><di:waypoint x="900" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="925" y="355" /><di:waypoint x="925" y="300" /><bpmndi:BPMNLabel><dc:Bounds x="931" y="333" width="20" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="975" y="260" /><di:waypoint x="1037" y="260" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="950" y="380" /><di:waypoint x="977" y="380" /><di:waypoint x="977" y="500" /><di:waypoint x="1005" y="500" /><bpmndi:BPMNLabel><dc:Bounds x="954" y="360" width="20" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="1105" y="500" /><di:waypoint x="1120" y="500" /><di:waypoint x="1120" y="380" /><di:waypoint x="1135" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="1235" y="380" /><di:waypoint x="1250" y="380" /><di:waypoint x="1250" y="620" /><di:waypoint x="1265" y="620" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11"><di:waypoint x="1365" y="620" /><di:waypoint x="1395" y="620" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12"><di:waypoint x="1495" y="620" /><di:waypoint x="1525" y="620" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13"><di:waypoint x="1625" y="620" /><di:waypoint x="1687" y="620" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

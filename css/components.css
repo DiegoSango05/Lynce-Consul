@@ -48,3 +48,63 @@ th{background:var(--soft);font-family:"Bricolage Grotesque",sans-serif}
 @media(max-width:900px){.road{grid-template-columns:1fr 1fr}}
 .rd{border:2px dashed var(--line);border-radius:12px;padding:16px;font-size:.95rem}
 .rd.done{border:2px solid var(--teal);background:var(--card)}
+/* análisis, TO-BE y requisitos */
+.diagram{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px}
+.lane-svg{display:block;width:100%;min-width:980px;height:auto;font:500 12.5px "Instrument Sans",sans-serif}
+.lane-svg .lb{fill:var(--line)}
+.lane-svg .lbt{fill:var(--fg);font:700 13px "Bricolage Grotesque",sans-serif;text-anchor:middle}
+.lane-svg .la{fill:var(--card)}
+.lane-svg .lz{fill:var(--soft)}
+.lane-svg .lerp{fill:color-mix(in srgb,var(--teal) 10%,var(--card))}
+.lane-svg .sep{stroke:var(--line)}
+.lane-svg .nd{fill:var(--card);stroke:var(--fg);stroke-width:1.5}
+.lane-svg .nd.ev{stroke-width:2.6}
+.lane-svg .nd.dz{fill:color-mix(in srgb,var(--amber) 18%,var(--card));stroke:var(--amber)}
+.lane-svg .nd.ds{stroke-dasharray:5 4;stroke:var(--mut)}
+.lane-svg .nd.sys{fill:color-mix(in srgb,var(--teal) 16%,var(--card));stroke:var(--teal)}
+.lane-svg .nt{fill:var(--fg);text-anchor:middle}
+.lane-svg .eg{fill:none;stroke:var(--mut);stroke-width:1.5}
+.lane-svg .ar{fill:var(--mut)}
+.lane-svg .mkp{fill:var(--red)}
+.lane-svg .mkm{fill:var(--green)}
+.lane-svg .mkt{fill:var(--bg);font-size:10px;font-weight:700;text-anchor:middle}
+.lane-svg .el{fill:var(--mut);font-size:11px;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:12px;font-size:.9rem;color:var(--mut)}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.lg{display:inline-block;width:22px;height:14px;border:1.5px solid var(--fg);border-radius:4px;background:var(--card)}
+.lg.ev{border-radius:8px;border-width:2.5px}
+.lg.dz{width:14px;transform:rotate(45deg);border-color:var(--amber);border-radius:2px;background:color-mix(in srgb,var(--amber) 18%,var(--card))}
+.lg.sys{border-color:var(--teal);background:color-mix(in srgb,var(--teal) 16%,var(--card))}
+.lg.ds{border-style:dashed;border-color:var(--mut)}
+.dot{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;font-size:.72rem;font-weight:700;color:var(--bg)}
+.dot.p{background:var(--red)}
+.dot.m{background:var(--green)}
+.badge{display:inline-block;padding:1px 10px;border-radius:999px;font-size:.8rem;font-weight:600;border:1px solid currentColor;color:var(--mut);white-space:nowrap}
+.b-alta,.b-must{color:var(--red)}
+.b-media,.b-should{color:var(--amber)}
+.b-could{color:var(--teal)}
+.cat1{color:var(--c1);font-weight:600}
+.cat2{color:var(--c2);font-weight:600}
+.cat3{color:var(--c3);font-weight:600}
+.cat4{color:var(--c4);font-weight:600}
+.catcard{border-top:5px solid var(--line)}
+.catcard.k1{border-top-color:var(--c1)}
+.catcard.k2{border-top-color:var(--c2)}
+.catcard.k3{border-top-color:var(--c3)}
+.catcard.k4{border-top-color:var(--c4)}
+.catcard ul{margin:10px 0 0;padding-left:18px;color:var(--mut);font-size:.95rem}
+td.id,th.id{white-space:nowrap;font-weight:700}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 14px}
+.filters button{font:500 .93rem "Instrument Sans",sans-serif;color:var(--fg);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 16px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--btn);color:var(--on);border-color:var(--btn)}
+.kpi b{display:block;font:800 1.6rem "Bricolage Grotesque",sans-serif;color:var(--teal);margin-bottom:6px}
+.src{font-size:.88rem;font-style:italic}
+/* visor BPMN (bpmn-js, Camunda) */
+.bpmn{height:460px;background:#fff;border-radius:10px}
+#tobe-d.bpmn{height:640px}
+.bpmn .djs-overlay span{display:flex;gap:3px;white-space:nowrap}
+.bpmn .djs-overlay .dot{box-shadow:0 0 0 2px #fff}
+.bpmn .bjs-powered-by{opacity:.6}
+.tw.diagram:has(.bpmn){overflow:hidden}
+.legend .dl{margin-left:auto;font-weight:600}
+@media(max-width:700px){.bpmn,#tobe-d.bpmn{height:420px}}

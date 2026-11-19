@@ -7,13 +7,15 @@
 <link rel="icon" href="img/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
+<link rel="stylesheet" href="https://unpkg.com/bpmn-js@17.11.1/dist/assets/diagram-js.css">
+<link rel="stylesheet" href="https://unpkg.com/bpmn-js@17.11.1/dist/assets/bpmn-js.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <header><div class="wrap nav">
 <a class="logo" href="#inicio" aria-label="Lynce, inicio"><img src="img/logo.png" alt="">Lynce</a>
 <nav aria-label="Principal"><ul id="menu">
-<li><a href="#quienes">Quiénes somos</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#cliente">Empresa cliente</a></li><li><a href="#estructura">Estructura</a></li><li><a href="#proceso">Proceso</a></li><li><a href="#fases">Fases</a></li></ul></nav>
+<li><a href="#quienes">Quiénes somos</a></li><li><a href="#servicios">Servicios</a></li><li><a href="#cliente">Empresa cliente</a></li><li><a href="#estructura">Estructura</a></li><li><a href="#proceso">Proceso</a></li><li><a href="#analisis">Análisis</a></li><li><a href="#tobe">Proceso TO-BE</a></li><li><a href="#requisitos">Requisitos</a></li><li><a href="#fases">Fases</a></li></ul></nav>
 <div class="nav-actions"><button class="ic" id="th" aria-label="Cambiar tema">◐</button><button class="ic" id="burger" aria-label="Abrir menú">☰</button></div>
 </div></header>
 
@@ -112,19 +114,137 @@
 <tr><td>Seguimiento de cobros manual</td><td>Impagos detectados tarde</td></tr></table></div>
 </div></section>
 
-<section id="fases"><div class="wrap">
-<h2>Hoja de ruta del proyecto</h2><p class="lead">Esta web crecerá con cada entrega. Estado actual: fase 1 completada.</p>
+<section id="analisis"><div class="wrap">
+<h2>2. Análisis del proceso</h2>
+<p class="lead">Analizamos el proceso order-to-cash de Servyeco paso a paso: quién interviene, qué entra y qué sale de cada actividad, dónde falla y qué mejoras proponemos.</p>
+<div class="g2 mt-32">
+<div class="card"><h3>Ficha del proceso</h3><dl class="mt-14">
+<dt>Proceso</dt><dd>Order-to-cash: desde la solicitud de producto del cliente hasta el cobro de la factura y la conciliación del pago.</dd>
+<dt>Inicio</dt><dd>El cliente solicita un producto.</dd>
+<dt>Fin</dt><dd>Se cobra la factura y se concilia el pago.</dd>
+<dt>Objetivo</dt><dd>Pedidos sin errores y con trazabilidad de lotes.</dd>
+<dt>Fuera de alcance</dt><dd>Fabricación, compras y explotación de depuradoras.</dd></dl></div>
+<div class="card"><h3>Participantes y punto de partida</h3><dl class="mt-14">
+<dt>Participantes</dt><dd>Cliente, administración, almacén, laboratorio, contabilidad y dirección (rol de supervisión).</dd>
+<dt>Punto de partida</dt><dd>Contabilidad básica, muchos datos recogidos a mano y descoordinación entre departamentos.</dd>
+<dt>Puntos de decisión</dt><dd>«¿Hay stock?» (paso 5) y la validación del lote (paso 6), donde los datos poco fiables comprometen el resultado.</dd></dl></div></div>
+
+<h3 class="sub">Pasos, participantes, entradas y salidas</h3>
+<div class="tw"><table><tr><th class="id">#</th><th>Paso</th><th>Participante</th><th>Entrada</th><th>Salida</th></tr>
+<tr><td class="id">1</td><td>Solicitud de producto</td><td>Cliente</td><td>Necesidad del cliente</td><td>Pedido solicitado (correo, teléfono, WhatsApp o presencial)</td></tr>
+<tr><td class="id">2</td><td>Recepción y anotación del pedido</td><td>Administración</td><td>Solicitud del cliente</td><td>Datos del pedido anotados</td></tr>
+<tr><td class="id">3</td><td>Registro del pedido</td><td>Administración</td><td>Datos anotados</td><td>Pedido registrado (Excel / papel)</td></tr>
+<tr><td class="id">4</td><td>Consulta de stock y lotes</td><td>Almacén</td><td>Pedido registrado</td><td>Disponibilidad y lotes candidatos</td></tr>
+<tr><td class="id">5</td><td>Decisión: ¿hay stock?</td><td>Almacén</td><td>Disponibilidad</td><td>Sí: continúa el proceso. No: aviso al cliente y replanificación</td></tr>
+<tr><td class="id">6</td><td>Verificación de lote y calidad</td><td>Laboratorio</td><td>Lote candidato</td><td>Lote validado y certificado de calidad</td></tr>
+<tr><td class="id">7</td><td>Preparación y expedición</td><td>Almacén</td><td>Lote validado</td><td>Producto enviado y albarán</td></tr>
+<tr><td class="id">8</td><td>Facturación</td><td>Contabilidad</td><td>Albarán y pedido</td><td>Factura emitida</td></tr>
+<tr><td class="id">9</td><td>Seguimiento del cobro</td><td>Contabilidad</td><td>Factura</td><td>Estado de pago, reclamaciones</td></tr>
+<tr><td class="id">10</td><td>Cobro y conciliación</td><td>Contabilidad</td><td>Pago del cliente</td><td>Pago conciliado (fin del proceso)</td></tr></table></div>
+
+<h3 class="sub">2.1. Modelo AS-IS</h3>
+<p class="mut">Proceso actual modelado en BPMN 2.0 con Camunda Modeler, en carriles por participante. Los círculos rojos numerados señalan los pasos donde se han detectado problemas (apartado 2.2). Arrastra para desplazarte y usa la rueda del ratón para hacer zoom.</p>
+<div class="tw diagram mt-16"><div id="asis" data-src="bpmn/asis.bpmn" data-label="Diagrama de carriles del proceso actual (AS-IS) de Servyeco, con los problemas P1 a P7 marcados"></div></div>
+<div class="legend"><span><i class="dot p">n</i>Problema detectado (Pn)</span><span><i class="lg ev"></i>Evento de inicio / fin</span><span><i class="lg"></i>Tarea manual o de usuario</span><span><i class="lg dz"></i>Compuerta exclusiva</span><a class="dl" href="bpmn/asis.bpmn" download>Descargar asis.bpmn</a></div>
+
+<h3 class="sub">2.2. Identificación de problemas</h3>
+<p class="mut">Para cada paso hemos revisado si se hace correctamente, qué problemas tiene y si genera insatisfacción.</p>
+<div class="tw mt-16"><table><tr><th class="id">ID</th><th>Pasos</th><th>Análisis: cómo se hace y qué falla</th><th>Consecuencia</th><th>Insatisfacción</th></tr>
+<tr><td class="id">P1</td><td>1-2</td><td>Los pedidos llegan por correo, teléfono, WhatsApp o en persona y se anotan a mano, sin un canal ni un formato únicos.</td><td>Pedidos perdidos o duplicados; datos incompletos.</td><td><span class="badge b-alta">Alta</span> personal de administración y clientes.</td></tr>
+<tr><td class="id">P2</td><td>3</td><td>El pedido se vuelve a escribir en Excel o papel: doble trabajo y riesgo de errores de transcripción.</td><td>Retrasos y errores que se detectan tarde.</td><td><span class="badge b-media">Media</span> administración.</td></tr>
+<tr><td class="id">P3</td><td>4-5</td><td>El stock y los lotes se llevan en hojas Excel desactualizadas; la decisión «¿hay stock?» se toma con datos poco fiables.</td><td>Roturas de stock y entregas incompletas.</td><td><span class="badge b-alta">Alta</span> almacén, comerciales y clientes.</td></tr>
+<tr><td class="id">P4</td><td>6</td><td>El laboratorio tiene una conexión lenta con el pedido; la verificación del lote es un cuello de botella y la trazabilidad es lenta ante auditorías.</td><td>Esperas en la expedición; riesgo ante auditorías.</td><td><span class="badge b-alta">Alta</span> laboratorio y dirección.</td></tr>
+<tr><td class="id">P5</td><td>7</td><td>Hay descoordinación entre departamentos: el albarán y el aviso de expedición se comunican a mano.</td><td>Facturación retrasada; información inconsistente entre áreas.</td><td><span class="badge b-media">Media</span> almacén y contabilidad.</td></tr>
+<tr><td class="id">P6</td><td>8</td><td>La facturación se hace con una contabilidad básica y muchos datos recogidos a mano.</td><td>Errores de factura y dependencia de personas concretas.</td><td><span class="badge b-media">Media</span> contabilidad.</td></tr>
+<tr><td class="id">P7</td><td>9-10</td><td>El seguimiento de los cobros es manual: no hay avisos de vencimiento ni conciliación automática.</td><td>Impagos detectados tarde y tesorería menos previsible.</td><td><span class="badge b-alta">Alta</span> contabilidad y dirección.</td></tr></table></div>
+
+<h3 class="sub">2.3. Propuestas de mejora</h3>
+<p class="mut">Las mejoras se derivan de los principios de BPR y de las categorías de <i>8 Practical Business Process Improvement Ideas</i> (Tallyfy, 2020). Todas las categorías tienen al menos una propuesta.</p>
+<div class="tw mt-16"><table><tr><th class="id">ID</th><th>Problema</th><th>Categoría</th><th>Mejora propuesta</th><th>Beneficio esperado</th></tr>
+<tr><td class="id">M1</td><td>P1</td><td class="cat1">1. Análisis y mejora</td><td>Estandarizar la entrada de pedidos: un único canal (formulario/plantilla de pedido) para todos los comerciales y clientes.</td><td>Menos pérdidas y duplicados; datos completos desde el principio.</td></tr>
+<tr><td class="id">M2</td><td>P2</td><td class="cat2">2. Resolución de problemas</td><td>Eliminar el registro duplicado en Excel/papel: el pedido se introduce una sola vez.</td><td>Menos tiempo administrativo y menos errores.</td></tr>
+<tr><td class="id">M3</td><td>P3</td><td class="cat4">4. Adopción de software / TIC</td><td>Inventario de lotes en tiempo real, actualizado automáticamente con cada entrada y salida.</td><td>Decisiones de disponibilidad fiables; menos roturas de stock.</td></tr>
+<tr><td class="id">M4</td><td>P4</td><td class="cat2">2. Resolución de problemas</td><td>Replantear el cuello de botella del laboratorio: asociar la validación de calidad al lote y preasignar lotes ya liberados.</td><td>Expedición más ágil; trazabilidad rápida.</td></tr>
+<tr><td class="id">M5</td><td>P5</td><td class="cat4">4. Adopción de software / TIC</td><td>Notificaciones automáticas entre departamentos y albarán digital al expedir.</td><td>Coordinación sin mensajes manuales.</td></tr>
+<tr><td class="id">M6</td><td>P6</td><td class="cat4">4. Adopción de software / TIC</td><td>Facturación automática a partir del albarán y el pedido.</td><td>Facturas sin errores de transcripción, emitidas antes.</td></tr>
+<tr><td class="id">M7</td><td>P7</td><td class="cat4">4. Adopción de software / TIC</td><td>Cuadro de vencimientos, recordatorios automáticos de impago y conciliación bancaria automática.</td><td>Impagos detectados a tiempo; tesorería previsible.</td></tr>
+<tr><td class="id">M8</td><td>P4</td><td class="cat3">3. Nuevas necesidades del negocio</td><td>Trazabilidad completa cliente–pedido–lote para cumplir la normativa y superar auditorías.</td><td>Respuesta rápida a auditorías e incidencias de lote.</td></tr>
+<tr><td class="id">M9</td><td>P1-P7</td><td class="cat3">3. Nuevas necesidades del negocio</td><td>Visibilidad en tiempo real de pedidos, stock y facturación para la dirección, para crecer sin aumentar el personal administrativo.</td><td>Escalabilidad y apoyo a la digitalización de la empresa.</td></tr>
+<tr><td class="id">M10</td><td>P5</td><td class="cat1">1. Análisis y mejora</td><td>Definir un circuito único con responsables y plazos internos para cada paso del proceso.</td><td>Responsabilidades claras y menos tiempo de espera entre áreas.</td></tr></table></div>
+
+<h3 class="sub">Cobertura por categoría</h3>
+<div class="g4">
+<div class="card catcard k1"><h4 class="cat1">1. Análisis y mejora</h4><ul><li>Canal único y plantilla de pedido estándar (M1)</li><li>Circuito único con responsables y plazos (M10)</li></ul></div>
+<div class="card catcard k2"><h4 class="cat2">2. Resolución de problemas</h4><ul><li>Eliminar el registro duplicado Excel / papel (M2)</li><li>Preasignar lotes ya liberados por el laboratorio (M4)</li></ul></div>
+<div class="card catcard k3"><h4 class="cat3">3. Nuevas necesidades del negocio</h4><ul><li>Trazabilidad cliente–pedido–lote para auditorías (M8)</li><li>Visibilidad en tiempo real para crecer sin más personal (M9)</li></ul></div>
+<div class="card catcard k4"><h4 class="cat4">4. Adopción de software / TIC</h4><ul><li>Inventario de lotes en tiempo real (M3)</li><li>Notificaciones y albarán digital (M5)</li><li>Facturación, recordatorios y conciliación automáticos (M6, M7)</li></ul></div></div>
+<p class="mut src mt-14">Fuente de las categorías: Tallyfy (2020), <i>8 Practical Business Process Improvement Ideas</i>.</p>
+</div></section>
+
+<section id="tobe" class="alt"><div class="wrap">
+<h2>3. Proceso mejorado (TO-BE)</h2>
+<p class="lead">Aplicando las mejoras M1–M10 rediseñamos el order-to-cash: un único registro del pedido en el ERP, stock y lotes en tiempo real, calidad vinculada al lote y facturación y cobro automatizados.</p>
+<h3 class="sub">Modelo TO-BE</h3>
+<p class="mut">Proceso rediseñado en BPMN 2.0 con Camunda Modeler. Las etiquetas verdes indican la mejora aplicada en cada actividad y el carril ERP agrupa las tareas de servicio que pasan a ser automáticas.</p>
+<div class="tw diagram mt-16"><div id="tobe-d" data-src="bpmn/tobe.bpmn" data-label="Diagrama de carriles del proceso mejorado (TO-BE) de Servyeco, con las mejoras M1 a M10 aplicadas"></div></div>
+<div class="legend"><span><i class="dot m">Mn</i>Mejora aplicada</span><span><i class="lg ev"></i>Inicio / fin</span><span><i class="lg"></i>Tarea de usuario</span><span><i class="lg sys"></i>Tarea de servicio / envío (ERP)</span><span><i class="lg dz"></i>Compuerta exclusiva</span><span><i class="lg ds"></i>Anotación (supervisión)</span><a class="dl" href="bpmn/tobe.bpmn" download>Descargar tobe.bpmn</a></div>
+
+<h3 class="sub">Qué cambia: antes y después</h3>
+<div class="tw"><table><tr><th>Actividad</th><th>AS-IS (hoy)</th><th>TO-BE (propuesta)</th><th>Mejora</th><th>Resuelve</th></tr>
+<tr><td>Entrada del pedido</td><td>Correo, teléfono, WhatsApp o presencial; anotado a mano.</td><td>Canal único (portal o formulario estándar) con campos obligatorios.</td><td>M1</td><td>P1</td></tr>
+<tr><td>Registro</td><td>Se reescribe en Excel o papel.</td><td>Se introduce una sola vez y queda registrado en el ERP con número y estado.</td><td>M2</td><td>P2</td></tr>
+<tr><td>Stock y lotes</td><td>Hojas Excel desactualizadas.</td><td>Inventario por lote en tiempo real y reserva del lote al confirmar el pedido.</td><td>M3</td><td>P3</td></tr>
+<tr><td>Falta de stock</td><td>Aviso manual y tardío al cliente.</td><td>Aviso automático al cliente y replanificación con nueva fecha.</td><td>M3, M5</td><td>P3</td></tr>
+<tr><td>Calidad del lote</td><td>Verificación lenta, sin conexión con el pedido.</td><td>Lotes ya liberados preasignados; certificado vinculado al lote; trazabilidad cliente–pedido–lote.</td><td>M4, M8</td><td>P4</td></tr>
+<tr><td>Expedición</td><td>Albarán y aviso de expedición manuales.</td><td>Albarán digital y notificación automática a contabilidad.</td><td>M5</td><td>P5</td></tr>
+<tr><td>Facturación</td><td>Datos reintroducidos a mano.</td><td>Factura generada automáticamente desde albarán y pedido.</td><td>M6</td><td>P6</td></tr>
+<tr><td>Seguimiento y cobro</td><td>Seguimiento manual, sin avisos.</td><td>Cuadro de vencimientos, recordatorios y conciliación bancaria automáticos.</td><td>M7</td><td>P7</td></tr>
+<tr><td>Supervisión</td><td>Sin visibilidad de conjunto.</td><td>Cuadro de mando en tiempo real para la dirección.</td><td>M9</td><td>P1-P7</td></tr></table></div>
+
+<h3 class="sub">Circuito con responsables y plazos (M10)</h3>
+<p class="mut">Plazos internos orientativos, propuestos para validar con Servyeco.</p>
+<div class="tw mt-16"><table><tr><th>Paso</th><th>Responsable</th><th>Plazo interno propuesto</th></tr>
+<tr><td>Registro y validación del pedido</td><td>Administración</td><td>Mismo día (≤ 4 h laborables)</td></tr>
+<tr><td>Confirmación de disponibilidad y reserva de lote</td><td>ERP / almacén</td><td>Automático al registrar el pedido</td></tr>
+<tr><td>Verificación de un lote no liberado</td><td>Laboratorio de calidad</td><td>≤ 24 h</td></tr>
+<tr><td>Preparación y expedición</td><td>Logística y almacén</td><td>≤ 48 h desde la confirmación</td></tr>
+<tr><td>Emisión de la factura</td><td>ERP / contabilidad</td><td>El mismo día de la expedición</td></tr>
+<tr><td>Recordatorio de cobro</td><td>ERP / contabilidad</td><td>7 días antes y el día del vencimiento</td></tr>
+<tr><td>Reclamación de impago</td><td>Administración y finanzas</td><td>≤ 3 días tras el vencimiento</td></tr>
+<tr><td>Conciliación bancaria</td><td>ERP / contabilidad</td><td>Diaria</td></tr></table></div>
+
+<h3 class="sub">Indicadores para medir la mejora</h3>
+<div class="g4">
+<div class="card kpi"><b>Pedidos sin errores</b><p>% de pedidos expedidos sin incidencias de datos, cantidad o lote.</p></div>
+<div class="card kpi"><b>Lotes trazados</b><p>% de pedidos con lote y certificado vinculados (objetivo: 100 %).</p></div>
+<div class="card kpi"><b>Pedido → expedición</b><p>Tiempo medio desde el registro del pedido hasta la salida del almacén.</p></div>
+<div class="card kpi"><b>Plazo de cobro</b><p>Días medios de cobro y número de facturas vencidas sin reclamar.</p></div></div>
+</div></section>
+
+<section id="requisitos"><div class="wrap">
+<h2>Requisitos</h2>
+<p class="lead">A partir de los problemas (P) y las mejoras (M) identificamos los requisitos que debe cumplir el ERP. La prioridad sigue el método MoSCoW: Must (imprescindible), Should (importante) y Could (deseable).</p>
+<div class="filters" id="rf" role="group" aria-label="Filtrar requisitos"><button data-f="" aria-pressed="true">Todos</button><button data-f="RF" aria-pressed="false">Funcionales</button><button data-f="RNF" aria-pressed="false">No funcionales</button></div>
+<div class="tw"><table id="rt"></table></div>
+<h3 class="sub">Trazabilidad: mejoras y requisitos</h3>
+<p class="mut">Qué requisitos dan soporte a cada mejora propuesta.</p>
+<div class="tw mt-16"><table id="rm"></table></div>
+</div></section>
+
+<section id="fases" class="alt"><div class="wrap">
+<h2>Hoja de ruta del proyecto</h2><p class="lead">Esta web crecerá con cada entrega. Estado actual: situación actual, análisis, proceso mejorado y requisitos completados; el siguiente paso es la selección del ERP.</p>
 <div class="road mt-28">
-<div class="rd done"><h4>1. Situación actual</h4><p class="mut">Empresa cliente y proceso order-to-cash.</p></div>
-<div class="rd"><h4>2. Requisitos</h4><p class="mut">Próximamente</p></div>
+<div class="rd done"><h4>1. Situación actual</h4><p class="mut">Empresa cliente, proceso order-to-cash y análisis AS-IS.</p></div>
+<div class="rd done"><h4>2. Requisitos</h4><p class="mut">Requisitos funcionales y no funcionales.</p></div>
 <div class="rd"><h4>3. Selección del ERP</h4><p class="mut">Próximamente</p></div>
-<div class="rd"><h4>4. Proceso mejorado</h4><p class="mut">Próximamente</p></div>
+<div class="rd done"><h4>4. Proceso mejorado</h4><p class="mut">Modelo TO-BE con las mejoras M1–M10.</p></div>
 <div class="rd"><h4>5. Implantación</h4><p class="mut">Próximamente</p></div></div>
 </div></section>
 </main>
 
 <footer><div class="wrap"><a class="logo logo--sm" href="#inicio"><img src="img/logo.png" alt="">Lynce</a><span>Proyecto académico · EI1046/MT1046 Sistemas de Información Integrados · Universitat Jaume I · Curso 2026/2027</span></div></footer>
 
+<script src="https://unpkg.com/bpmn-js@17.11.1/dist/bpmn-navigated-viewer.production.min.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
