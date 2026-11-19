@@ -1,0 +1,50 @@
+.btn{display:inline-block;padding:12px 22px;border-radius:10px;font:600 16px "Instrument Sans",sans-serif;text-decoration:none;border:2px solid var(--btn);cursor:pointer;color:var(--fg);background:none;transition:transform .15s}
+.btn.p{background:var(--btn);color:var(--on)}
+.btn:hover{transform:translateY(-2px)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+.card p{color:var(--mut);margin-top:8px;font-size:.97rem}
+.card .ico{width:100%;height:84px;background:var(--soft);border-radius:10px;margin-bottom:14px}
+.member{text-align:left;cursor:pointer;font:inherit;color:var(--fg);transition:border-color .2s}
+.member[aria-pressed="true"]{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal)}
+.av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:800 1.2rem "Bricolage Grotesque",sans-serif;color:#fff;margin-bottom:12px}
+#cv{margin-top:16px;padding:26px;background:var(--card);border:1px solid var(--line);border-radius:14px;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:800px){#cv{grid-template-columns:1fr}}
+#cv ul{margin:8px 0 0;padding-left:20px;color:var(--mut)}
+.pill{display:inline-block;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:3px 12px;font-size:.85rem;margin:3px 4px 0 0}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:10px 22px}
+dt{font-weight:600}
+dd{margin:0;color:var(--mut)}
+.tl{border-left:3px solid var(--line);margin:0;padding:0 0 0 22px;list-style:none}
+.tl li{position:relative;margin-bottom:22px}
+.tl li::before{content:"";position:absolute;left:-30px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--teal)}
+.tl b{display:block}
+.tl span{color:var(--mut);font-size:.97rem}
+.todo{background:color-mix(in srgb,var(--sky) 30%,transparent);border-radius:4px;padding:0 4px}
+/* organigrama */
+.org{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:10px}
+.node{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:10px 14px;text-align:center;font-size:.93rem;min-width:132px;transition:.25s}
+.node b{display:block;font-family:"Bricolage Grotesque",sans-serif}
+.node small{color:var(--mut)}
+.org.hl .node.in{border-color:var(--teal);background:color-mix(in srgb,var(--teal) 16%,var(--card))}
+.org.hl .node:not(.in):not(.top){opacity:.45}
+.vl{width:2px;height:22px;background:var(--line)}
+.row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;border-top:2px solid var(--line);padding-top:22px;position:relative;width:100%}
+.row .node{position:relative}
+.row .node::before{content:"";position:absolute;left:50%;top:-22px;width:2px;height:22px;background:var(--line)}
+.sw{display:flex;align-items:center;gap:8px;margin-top:20px;font-weight:500}
+/* proceso */
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:20px}
+@media(max-width:900px){.flow{grid-template-columns:1fr 1fr}}
+.st{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--line);border-radius:12px;padding:14px;text-align:left;cursor:pointer;color:var(--fg);font:inherit;font-size:.95rem}
+.st.on{border-top-color:var(--teal);box-shadow:0 8px 24px -14px rgba(27,64,96,.6)}
+.st b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:.8rem;color:var(--mut)}
+#sd{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--soft);font-family:"Bricolage Grotesque",sans-serif}
+.tw{overflow-x:auto}
+.road{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:900px){.road{grid-template-columns:1fr 1fr}}
+.rd{border:2px dashed var(--line);border-radius:12px;padding:16px;font-size:.95rem}
+.rd.done{border:2px solid var(--teal);background:var(--card)}
